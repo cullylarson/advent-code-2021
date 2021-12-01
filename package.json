@@ -1,0 +1,22 @@
+{
+  "name": "advent-code-2021",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "lint": "esw --watch --color .",
+    "test": "jest ./"
+  },
+  "author": "Cully Larson",
+  "dependencies": {
+    "@cullylarson/f": "^0.1.2",
+    "@cullylarson/p": "^0.1.0",
+    "eslint": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest": "^25.3.0",
+    "eslint-watch": "^8.0.0",
+    "jest": "^27.4.2",
+    "standard": "^16.0.4"
+  },
+  "devDependencies": {}
+}
