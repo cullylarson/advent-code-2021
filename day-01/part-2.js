@@ -2,6 +2,8 @@ import {compose, report, filter, map, split, toInt} from '@cullylarson/f'
 import {then} from '@cullylarson/p'
 import {readFile, countIncreases} from './lib.js'
 
+// adds up "windows" of numbers. a window is the number at each index plus
+// the numbers at the next two indexes.
 const sumWindows = (xs) => {
   const windows = []
 
