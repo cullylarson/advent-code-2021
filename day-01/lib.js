@@ -1,8 +1,4 @@
-import fs from 'fs'
-import {promisify} from 'util'
 import {compose, reduce, get} from '@cullylarson/f'
-
-export const readFile = promisify(fs.readFile)
 
 const reduceIncreases = reduce((acc, x) => {
   if(acc.previousValue !== null && acc.previousValue < x) {
