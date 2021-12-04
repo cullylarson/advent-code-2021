@@ -1,5 +1,5 @@
 import {then} from '@cullylarson/p'
-import {compose, trim, filter, map, split, toInt, head, tail} from '@cullylarson/f'
+import {compose, trim, curry, filter, map, split, toInt, head, tail} from '@cullylarson/f'
 import {readFile} from '../lib.js'
 
 const parseCallNumbers = compose(
@@ -26,7 +26,7 @@ const parseBoards = boardLines => {
     board.push(parseBoardLine(boardLines[i]))
   }
 
-  // there should be a last, incomplete board
+  // there should be a last, complete board
   boards.push(board)
 
   return boards
@@ -37,6 +37,61 @@ const parseInput = (inputArr) => {
     callNumbers: parseCallNumbers(head(inputArr)),
     boards: parseBoards(tail(inputArr)),
   }
+}
+
+const sum = xs => xs.reduce((acc, x) => acc + x)
+
+export const markBoard = curry((number, board) => {
+  return map(map(x => x === number ? 'x' : x), board)
+})
+
+export const markBoards = curry((number, boards) => {
+  return boards.map(markBoard(number))
+})
+
+const isWinningLine = line => {
+  const lineUnique = new Set(line)
+  return lineUnique.size === 1 && lineUnique.has('x')
+}
+
+const hasWinningLine = lines => lines.some(isWinningLine)
+
+const invertBoard = board => {
+  const vLines = []
+
+  for(let col = 0; col < board[0].length; col++) {
+    const vLine = []
+    for(let row = 0; row < board.length; row++) {
+      vLine.push(board[row][col])
+    }
+    vLines.push(vLine)
+  }
+
+  return vLines
+}
+
+export const isWinningBoard = board => {
+  // check horizontal lines
+  if(hasWinningLine(board)) {
+    return true
+  }
+
+  // check vertical lines
+  if(hasWinningLine(invertBoard(board))) {
+    return true
+  }
+
+  return false
+}
+
+const scoreBoard = compose(
+  sum,
+  filter(x => x !== 'x'),
+  x => x.flat(),
+)
+
+export const scoreGame = ({board, callNumber}) => {
+  return scoreBoard(board) * callNumber
 }
 
 export const readInput = fileName => then(compose(
