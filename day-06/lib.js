@@ -1,60 +1,51 @@
-import yallist from 'yallist'
 import {then} from '@cullylarson/p'
 import {compose, curry, filter, trim, map, split, toInt} from '@cullylarson/f'
 import {readFile} from '../lib.js'
 
-export const length = xs => xs.length
+export const getTotal = model => model.reduce((acc, x) => acc + x, 0)
 
-const printHeapUsed = () => {
-  const heapUsed = process.memoryUsage().heapUsed / 1024 / 1024
-  const totalHeapUsedMb = (heapUsed).toFixed(2)
-  console.info('Used: ', totalHeapUsedMb, 'MB')
+const emptyModel = maxAge => {
+  return Array(maxAge + 1).fill(0)
 }
 
-export const printList = fishes => {
-  let list = ''
-  fishes.forEach(fish => {
-    list += fish + ', '
-  })
-  console.info(list)
-  return fishes
-}
+const runDay = (maxAge, model) => {
+  const nextDayModel = emptyModel(maxAge)
 
-const runDay = fishes => {
-  const last = fishes.tail
+  for(let age = 0; age < model.length; age++) {
+    const num = model[age]
 
-  let item = fishes.head
-  do {
-    // reproduce
-    if(item.value === 0) {
-      fishes.push(8)
-      item.value = 6
+    if(age === 0) {
+      nextDayModel[maxAge] += num
+      nextDayModel[maxAge - 2] += num
     }
     else {
-      item.value--
+      nextDayModel[age - 1] += num
     }
-
-    item = item === last ? null : item.next
   }
-  while(item)
 
-  return fishes
+  return nextDayModel
 }
 
-export const runDays = curry((numDays, fishes) => {
+export const runDays = curry((numDays, maxAge, model) => {
   for(let i = 0; i < numDays; i++) {
-    fishes = runDay(fishes)
-    console.log({i})
-    printHeapUsed()
+    model = runDay(maxAge, model)
   }
 
-  return fishes
+  return model
 })
 
-const toLinkedList = (xs) => yallist.create(xs)
+const toModel = curry((maxAge, ages) => {
+  const model = emptyModel(maxAge)
 
-export const readInput = fileName => then(compose(
-  toLinkedList,
+  for(const age of ages) {
+    model[age]++
+  }
+
+  return model
+})
+
+export const readInput = (maxAge, fileName) => then(compose(
+  toModel(maxAge),
   map(toInt(null)),
   filter(Boolean),
   map(trim),
