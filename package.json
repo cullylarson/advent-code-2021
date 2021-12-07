@@ -16,7 +16,8 @@
     "eslint-plugin-jest": "^25.3.0",
     "eslint-watch": "^8.0.0",
     "jest": "^27.4.2",
-    "standard": "^16.0.4"
+    "standard": "^16.0.4",
+    "yallist": "^4.0.0"
   },
   "devDependencies": {}
 }
