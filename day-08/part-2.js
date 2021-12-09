@@ -1,6 +1,6 @@
 import {then} from '@cullylarson/p'
 import {compose, curry, filter, map, split, report, join} from '@cullylarson/f'
-import {readInput, flat, isDistinct, numSegmentsToKnownValue} from './lib.js'
+import {readInput, isDistinct, numSegmentsToKnownValue} from './lib.js'
 
 const sort = xs => [...xs].sort()
 
@@ -27,14 +27,6 @@ const difference = (a, b) => a
 
 // the items in A that are not in B
 const differenceOneWay = (a, b) => a.filter(x => !b.includes(x))
-
-const getSegmentA = (pattern1Arr, pattern7Arr) => {
-  const result = difference(pattern1Arr, pattern7Arr)
-
-  if(result.length !== 1) throw Error('Could not get segment A')
-
-  return result[0]
-}
 
 const getSegmentD = (pattern0Arr) => {
   const result = differenceOneWay(['a', 'b', 'c', 'd', 'e', 'f', 'g'], pattern0Arr)
@@ -169,7 +161,6 @@ const getMapping = patterns => {
   const pattern7 = distinctPatterns[7]
   const pattern4 = distinctPatterns[4]
   const pattern8 = distinctPatterns[8]
-  const segmentA = getSegmentA(pattern1, pattern7)
   const segmentsBd = getSegmentsBd(pattern1, distinctPatterns[4])
   const pattern0 = getPattern0(patternArrs, segmentsBd)
   const segmentD = getSegmentD(pattern0)
