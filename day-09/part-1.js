@@ -1,13 +1,12 @@
 import {then} from '@cullylarson/p'
 import {compose, map, get, filter, report} from '@cullylarson/f'
-import {readInput} from './lib.js'
+import {readInput, sum} from './lib.js'
 
 const getValue = (map, x, y) => map[y][x]
 
 const notNull = x => x !== null
 
 const increment = x => x + 1
-const sum = xs => xs.reduce((acc, x) => acc + x, 0)
 
 const getAdjacentValues = (map, x, y) => {
   return [
