@@ -34,8 +34,6 @@ export const numSegmentsToKnownValue = compose(
   x => Object.entries(x),
 )(knownValueToNumSegments)
 
-export const flat = xs => xs.flat()
-
 export const length = xs => xs.length
 
 export const isDistinct = compose(

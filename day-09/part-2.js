@@ -1,6 +1,7 @@
 import {then} from '@cullylarson/p'
 import {compose, map, report, headN} from '@cullylarson/f'
-import {readInput, sum} from './lib.js'
+import {sum} from '../lib.js'
+import {readInput} from './lib.js'
 
 const rsort = xs => [...xs].sort((a, b) => b - a)
 

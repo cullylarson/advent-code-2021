@@ -1,6 +1,7 @@
 import {then} from '@cullylarson/p'
 import {compose, map, get, filter, report} from '@cullylarson/f'
-import {readInput, sum} from './lib.js'
+import {sum} from '../lib.js'
+import {readInput} from './lib.js'
 
 const getValue = (map, x, y) => map[y][x]
 

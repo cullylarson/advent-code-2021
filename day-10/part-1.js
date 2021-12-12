@@ -1,8 +1,7 @@
 import {then} from '@cullylarson/p'
 import {compose, map, report, get, filter, head, tail} from '@cullylarson/f'
+import {sum} from '../lib.js'
 import {readInput, isClose, closes, getClosing} from './lib.js'
-
-const sum = xs => xs.reduce((acc, x) => acc + x, 0)
 
 const points = {
   '}': 1197,

@@ -1,6 +1,6 @@
 import {then} from '@cullylarson/p'
 import {compose, trim, curry, filter, map, split, toInt, head, tail} from '@cullylarson/f'
-import {readFile} from '../lib.js'
+import {readFile, sum, flat} from '../lib.js'
 
 const parseCallNumbers = compose(
   map(toInt(null)),
@@ -38,8 +38,6 @@ const parseInput = (inputArr) => {
     boards: parseBoards(tail(inputArr)),
   }
 }
-
-const sum = xs => xs.reduce((acc, x) => acc + x)
 
 export const markBoard = curry((number, board) => {
   return map(map(x => x === number ? 'x' : x), board)
@@ -87,7 +85,7 @@ export const isWinningBoard = board => {
 const scoreBoard = compose(
   sum,
   filter(x => x !== 'x'),
-  x => x.flat(),
+  flat,
 )
 
 export const scoreGame = ({board, callNumber}) => {

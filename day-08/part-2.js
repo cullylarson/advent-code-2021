@@ -1,10 +1,9 @@
 import {then} from '@cullylarson/p'
 import {compose, curry, filter, map, split, report, join} from '@cullylarson/f'
+import {sum} from '../lib.js'
 import {readInput, isDistinct, numSegmentsToKnownValue} from './lib.js'
 
 const sort = xs => [...xs].sort()
-
-const sum = xs => xs.reduce((acc, x) => acc + x, 0)
 
 const sortLetters = compose(
   join(''),

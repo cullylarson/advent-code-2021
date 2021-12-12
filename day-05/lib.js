@@ -1,8 +1,6 @@
 import {then} from '@cullylarson/p'
 import {compose, filter, trim, map, split, toInt, last, curry} from '@cullylarson/f'
-import {readFile} from '../lib.js'
-
-const flat = xs => xs.flat()
+import {readFile, flat} from '../lib.js'
 
 const sort = xs => [...xs].sort((a, b) => a - b)
 
