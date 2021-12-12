@@ -1,6 +1,6 @@
 import {then} from '@cullylarson/p'
-import {compose, map, report, head, tail, filter, get} from '@cullylarson/f'
-import {readInput} from './lib.js'
+import {compose, map, report, get, filter, head, tail} from '@cullylarson/f'
+import {readInput, isClose, closes, getClosing} from './lib.js'
 
 const sum = xs => xs.reduce((acc, x) => acc + x, 0)
 
@@ -11,56 +11,33 @@ const points = {
   '>': 25137,
 }
 
-const pairs = {
-  '{': '}',
-  '[': ']',
-  '(': ')',
-  '<': '>',
-}
-
 const getPoints = closing => points[closing]
 
-const closingCharacters = Object.values(pairs)
-
-const isClose = (x) => closingCharacters.includes(x)
-
-const closes = (open, close) => {
-  return pairs[open] === close
-}
-
-const getClosing = open => pairs[open]
-
 const findPairs = (input) => {
-  const pairs = []
-
   do {
     if(!input.length) {
-      return {
-        pairs,
-        input,
-      }
+      return input
     }
 
     const open = head(input)
 
     if(isClose(open)) {
-      return {
-        pairs,
-        input,
-      }
+      // this will be handled by the caller
+      return input
     }
 
     const result = findPairs(tail(input))
 
-    if(result.error) return result
+    if(result.error) {
+      return result
+    }
 
-    input = result.input
-    pairs.push(result.pairs)
+    input = result
 
     if(!input.length) {
       return {
         error: {
-          kind: 'no-close',
+          kind: 'incomplete',
           open,
         },
       }
@@ -79,15 +56,11 @@ const findPairs = (input) => {
       }
     }
 
-    pairs.push({open, close})
     input = tail(input)
   }
   while(input.length)
 
-  return {
-    pairs,
-    input: '',
-  }
+  return input
 }
 
 then(compose(
